@@ -63,34 +63,11 @@ class App extends React.Component {
         }
     }
 
-    clickGood = () => {
-        this.setState({
-            good: this.state.good + 1,
-            total: this.state.total + 1
-        })
-    }
-
-    clickNeutral = () => {
-        this.setState({
-            neutral: this.state.neutral + 1,
-            total: this.state.total + 1
-        })
-    }
-
-    clickBad = () => {
-        this.setState({
-            bad: this.state.bad + 1,
-            total: this.state.total + 1
-        })
-    }
-
-    getValues = () => {
-        return {
-            good: this.state.good,
-            neutral: this.state.neutral,
-            bad: this.state.bad,
-            total: this.state.total
-        }
+    handleClick = (option) => () => {
+        const state = this.state
+        state[option] = state[option] + 1
+        state.total = state.total + 1
+        this.setState(state)
     }
 
     render() {
@@ -98,15 +75,15 @@ class App extends React.Component {
         const buttons = [
             {
                 text: 'Hyvä',
-                handleClick: this.clickGood
+                handleClick: this.handleClick('good')
             },
             {
                 text: 'Neutraali',
-                handleClick: this.clickNeutral
+                handleClick: this.handleClick('neutral')
             },
             {
                 text: 'Huono',
-                handleClick: this.clickBad
+                handleClick: this.handleClick('bad')
             }
         ]
 
@@ -115,7 +92,7 @@ class App extends React.Component {
                 <Title title='Anna palautetta' />
                 <Buttons buttons={buttons} />
                 <Title title='Statistiikka' />
-                <Statistics values={this.getValues()} />
+                <Statistics values={this.state} />
             </div>
         )
     }
