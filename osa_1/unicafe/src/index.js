@@ -5,8 +5,6 @@ const Title = ({title}) => <h1>{title}</h1>
 
 const Button = ({text, handleClick}) => <button onClick={handleClick}>{text}</button>
 
-const Statistic = ({text, total}) => <p>{text} {total}</p>
-
 class App extends React.Component {
     constructor() {
         super()
@@ -40,6 +38,19 @@ class App extends React.Component {
     }
 
     render() {
+        const average = () => {
+            if (this.state.total === 0) {
+                return 0;
+            }
+            let summa = this.state.good - this.state.bad
+            return Math.round(summa / this.state.total * 10) / 10
+        }
+        const positives = () => {
+            if (this.state.total === 0) {
+                return '0%'
+            }
+            return Math.round(this.state.good / this.state.total * 1000) / 10 + '%'
+        }
         return (
             <div>
                 <Title title='Anna palautetta' />
@@ -55,6 +66,8 @@ class App extends React.Component {
                 <p>Hyvä {this.state.good}</p>
                 <p>Neutraali {this.state.neutral}</p>
                 <p>Huono {this.state.bad}</p>
+                <p>Keskiarvo {average()}</p>
+                <p>Positiivisia {positives()}</p>
             </div>
         )
     }
