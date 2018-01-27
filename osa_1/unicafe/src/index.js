@@ -19,7 +19,7 @@ const Buttons = ({buttons}) => {
     )
 }
 
-const Statistic = ({text, value}) => <p>{text} {value}</p>
+const Statistic = ({text, value}) => <tr><td>{text} </td> <td>{value}</td></tr>
 
 const Statistics = ({values}) => {
     const {good, bad, neutral, total} = values
@@ -42,13 +42,15 @@ const Statistics = ({values}) => {
     }
 
     return (
-        <div>
-            <Statistic text='Hyvä' value={good} />
-            <Statistic text='Neutraali' value={neutral} />
-            <Statistic text='Huono' value={bad} />
-            <Statistic text='Keskiarvo' value={average()} />
-            <Statistic text='Positiivisia' value={positives()} />
-        </div>
+        <table>
+            <tbody>
+                <Statistic text='Hyvä' value={good} />
+                <Statistic text='Neutraali' value={neutral} />
+                <Statistic text='Huono' value={bad} />
+                <Statistic text='Keskiarvo' value={average()} />
+                <Statistic text='Positiivisia' value={positives()} />
+            </tbody>
+        </table>
     )    
 }
 
