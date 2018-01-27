@@ -24,32 +24,30 @@ const Statistic = ({text, value}) => <p>{text} {value}</p>
 const Statistics = ({values}) => {
     const {good, bad, neutral, total} = values
 
+    if (total === 0) {
+        return (
+            <div>
+                <p>Ei yhtään palautetta annettu</p>
+            </div>
+        )
+    }
+
     const average = () => {
-        if (total === 0) {
-            return 0;
-        }
         let summa = good - bad
         return Math.round(summa / total * 10) / 10
     }
 
     const positives = () => {
-        if (total === 0) {
-            return '0%'
-        }
         return Math.round(good / total * 1000) / 10 + '%'
     }
+
     return (
         <div>
-            <Title title='Statistiikka' />
-
-            <div>
-                <Statistic text='Hyvä' value={good} />
-                <Statistic text='Neutraali' value={neutral} />
-                <Statistic text='Huono' value={bad} />
-                <Statistic text='Keskiarvo' value={average()} />
-                <Statistic text='Positiivisia' value={positives()} />
-            </div>
-
+            <Statistic text='Hyvä' value={good} />
+            <Statistic text='Neutraali' value={neutral} />
+            <Statistic text='Huono' value={bad} />
+            <Statistic text='Keskiarvo' value={average()} />
+            <Statistic text='Positiivisia' value={positives()} />
         </div>
     )    
 }
@@ -86,6 +84,15 @@ class App extends React.Component {
         })
     }
 
+    getValues = () => {
+        return {
+            good: this.state.good,
+            neutral: this.state.neutral,
+            bad: this.state.bad,
+            total: this.state.total
+        }
+    }
+
     render() {
 
         const buttons = [
@@ -103,18 +110,12 @@ class App extends React.Component {
             }
         ]
 
-        const values = {
-            good: this.state.good,
-            neutral: this.state.neutral,
-            bad: this.state.bad,
-            total: this.state.total
-        }
-
         return (
             <div>
                 <Title title='Anna palautetta' />
                 <Buttons buttons={buttons} />
-                <Statistics values={values} />
+                <Title title='Statistiikka' />
+                <Statistics values={this.getValues()} />
             </div>
         )
     }
