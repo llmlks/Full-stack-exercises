@@ -40,27 +40,29 @@ const Yhteensa = (props) => {
 }
 
 const App = () => {
-    const kurssi = 'Half Stack -sovelluskehitys'
-    const osat = [
-        {
-            nimi: 'Reactin perusteet',
-            tehtavia: 10
-        },
-        {
-            nimi: 'Tiedonvälitys propseilla',
-            tehtavia: 7
-        },
-        {
-            nimi: 'Komponenttien tila',
-            tehtavia: 14
-        }
-    ]
+    const kurssi = {
+        nimi: 'Half Stack -sovelluskehitys',
+        osat: [
+            {
+                nimi: 'Reactin perusteet',
+                tehtavia: 10
+            },
+            {
+                nimi: 'Tiedonvälitys propseilla',
+                tehtavia: 7
+            },
+            {
+                nimi: 'Komponenttien tila',
+                tehtavia: 14
+            }
+        ]
+    }
 
     return (
         <div>
-            <Otsikko title={kurssi} />
-            <Sisalto osat={osat} />
-            <Yhteensa osat={osat} />
+            <Otsikko title={kurssi.nimi} />
+            <Sisalto osat={kurssi.osat} />
+            <Yhteensa osat={kurssi.osat} />
         </div>
     )
 }
