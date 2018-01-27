@@ -5,6 +5,55 @@ const Title = ({title}) => <h1>{title}</h1>
 
 const Button = ({text, handleClick}) => <button onClick={handleClick}>{text}</button>
 
+const Buttons = ({buttons}) => {
+    const elements =[]
+
+    buttons.forEach(element => {
+        elements.push(<Button text={element.text} handleClick={element.handleClick} />)
+    });
+
+    return (
+        <div>
+            {elements}
+        </div>
+    )
+}
+
+const Statistic = ({text, value}) => <p>{text} {value}</p>
+
+const Statistics = ({values}) => {
+    const {good, bad, neutral, total} = values
+
+    const average = () => {
+        if (total === 0) {
+            return 0;
+        }
+        let summa = good - bad
+        return Math.round(summa / total * 10) / 10
+    }
+
+    const positives = () => {
+        if (total === 0) {
+            return '0%'
+        }
+        return Math.round(good / total * 1000) / 10 + '%'
+    }
+    return (
+        <div>
+            <Title title='Statistiikka' />
+
+            <div>
+                <Statistic text='Hyvä' value={good} />
+                <Statistic text='Neutraali' value={neutral} />
+                <Statistic text='Huono' value={bad} />
+                <Statistic text='Keskiarvo' value={average()} />
+                <Statistic text='Positiivisia' value={positives()} />
+            </div>
+
+        </div>
+    )    
+}
+
 class App extends React.Component {
     constructor() {
         super()
@@ -38,36 +87,34 @@ class App extends React.Component {
     }
 
     render() {
-        const average = () => {
-            if (this.state.total === 0) {
-                return 0;
+
+        const buttons = [
+            {
+                text: 'Hyvä',
+                handleClick: this.clickGood
+            },
+            {
+                text: 'Neutraali',
+                handleClick: this.clickNeutral
+            },
+            {
+                text: 'Huono',
+                handleClick: this.clickBad
             }
-            let summa = this.state.good - this.state.bad
-            return Math.round(summa / this.state.total * 10) / 10
+        ]
+
+        const values = {
+            good: this.state.good,
+            neutral: this.state.neutral,
+            bad: this.state.bad,
+            total: this.state.total
         }
-        const positives = () => {
-            if (this.state.total === 0) {
-                return '0%'
-            }
-            return Math.round(this.state.good / this.state.total * 1000) / 10 + '%'
-        }
+
         return (
             <div>
                 <Title title='Anna palautetta' />
-
-                <div>
-                    <Button text='Hyvä' handleClick={this.clickGood} />
-                    <Button text='Neutraali' handleClick={this.clickNeutral} />
-                    <Button text='Huono' handleClick={this.clickBad} />
-                </div>
-
-                <Title title='Statistiikka' />
-
-                <p>Hyvä {this.state.good}</p>
-                <p>Neutraali {this.state.neutral}</p>
-                <p>Huono {this.state.bad}</p>
-                <p>Keskiarvo {average()}</p>
-                <p>Positiivisia {positives()}</p>
+                <Buttons buttons={buttons} />
+                <Statistics values={values} />
             </div>
         )
     }
