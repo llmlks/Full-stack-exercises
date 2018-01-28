@@ -27,15 +27,13 @@ const Sisalto = (props) => {
     )
 }
 
-const Yhteensa = (props) => {
-    let total = 0;
-
-    props.osat.forEach(element => {
-        total += element.tehtavia
-    });
+const Yhteensa = ({ osat }) => {
+    let total = osat
+        .map(osa => osa.tehtavia)
+        .reduce(((tehtavia, current) => tehtavia + current), 0);
 
     return (
-        <p>yhteensä {total} tehtävää</p>        
+        <p>yhteensä {total} tehtävää</p>
     )
 }
 
